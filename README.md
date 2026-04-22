@@ -101,7 +101,14 @@ Edit `.py` files — changes are live on next `cleanmap` run thanks to `-e`.
 
 **`[WinError 2] ... websockets.exe.deleteme`** — a previous install got stuck. Fix: use a venv (`py -m venv .venv && .venv\Scripts\activate`) and reinstall. Venvs sidestep Windows system-Python permission issues.
 
-**`'cleanmap' is not recognized`** — pip install succeeded but the shim isn't on your PATH, or you haven't reopened PowerShell yet. Close and reopen the terminal. If you installed into a venv, activate it first (`.venv\Scripts\activate`).
+**`'cleanmap' is not recognized`** — pip install succeeded but the shim isn't on your PATH. Quickest fix: run it as a Python module instead (no PATH needed):
+>
+> ```powershell
+> py -m cleanmap "C:\path\to\photo.png"
+> py -m cleanmap --help
+> ```
+>
+> Works anywhere `py` works. You can alias it to `cleanmap` later or fix your PATH — but this unblocks you immediately.
 
 **`GEMINI_API_KEY not set`** — you set it with `setx` but haven't opened a new terminal yet. `setx` writes to the permanent store, it doesn't touch your current session. Close and reopen PowerShell.
 
