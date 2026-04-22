@@ -2,67 +2,92 @@
 
 CLI tool for cleaning images — strips clutter (cars, people, trees, signs) and returns the main subject. Powered by Gemini 2.5 Flash Image.
 
+> Docs are written for **Windows (PowerShell)**. macOS/Linux notes included where syntax differs.
+
 ## Install
 
-Direct from GitHub (recommended for teammates):
+Open PowerShell and run:
 
-```
-pip install git+https://github.com/DavidChen-006/cleanmap.git
+```powershell
+py -m pip install git+https://github.com/DavidChen-006/cleanmap.git
 ```
 
 That's it. pip fetches the repo, installs dependencies, and puts `cleanmap` on your PATH.
 
-Requires Python 3.10+.
+Requires Python 3.10+. If you don't have Python, install it from https://python.org — **tick "Add Python to PATH"** on the first installer screen.
 
-> **If `pip` isn't recognized** (common on Windows), use the module form instead — it works as long as `python` is on PATH:
->
-> ```
-> python -m pip install git+https://github.com/DavidChen-006/cleanmap.git
-> ```
->
-> On Windows you may need `py -m pip ...` instead of `python -m pip ...`.
+> **macOS / Linux:** use `pip install git+https://github.com/DavidChen-006/cleanmap.git` (or `python3 -m pip install ...`).
 
 ## Setup
 
 Get a free Gemini API key: https://aistudio.google.com/apikey
 
-Export it (or put it in a `.env` file in your working directory):
+Set it persistently (survives reboots, available in all future terminals):
 
-```
-export GEMINI_API_KEY=your-key-here
+```powershell
+setx GEMINI_API_KEY "your-key-here"
 ```
 
-> **Note:** `export GEMINI_API_KEY=...` only lasts for that terminal window. Close the terminal and it's gone — open a new one and you'll have to export again.
->
-> To make it permanent, add the line to `~/.zshrc` (or `~/.bashrc`), or use a `.env` file in your project directory (`cleanmap` auto-loads it).
+**Then close and reopen PowerShell** — `setx` only takes effect in *new* terminals, not the one you ran it in.
+
+To verify it's set, open a new PowerShell and run:
+
+```powershell
+echo $env:GEMINI_API_KEY
+```
+
+### Session-only alternative
+
+If you only want the key for the current terminal:
+
+```powershell
+$env:GEMINI_API_KEY = "your-key-here"
+```
+
+Gone when you close the window.
+
+> **macOS / Linux:** `export GEMINI_API_KEY=your-key-here` (session-only). Add the line to `~/.zshrc` or `~/.bashrc` to make it permanent.
 
 ## Usage
 
-```
+```powershell
 cleanmap photo.png
 # writes photo.cleaned.png next to the input
 ```
 
-Drag-and-drop works: type `cleanmap `, then drag an image from Finder into the terminal, hit Enter.
+Drag-and-drop works: type `cleanmap `, then drag an image from File Explorer into the terminal, hit Enter.
 
 ### Flags
 
-```
-cleanmap photo.png -o cleaned.png                  # custom output path
-cleanmap photo.png -p "Remove only cars and people" # override the cleaning prompt
-cleanmap --help                                     # full help
+```powershell
+cleanmap photo.png -o cleaned.png                     # custom output path
+cleanmap photo.png -p "Remove only cars and people"   # override the cleaning prompt
+cleanmap --help                                       # full help
 ```
 
 ## Dev install (if you want to modify the code)
 
-```
+```powershell
 git clone https://github.com/DavidChen-006/cleanmap.git
 cd cleanmap
-python3 -m venv .venv && source .venv/bin/activate
-pip install -e .
+py -m venv .venv
+.venv\Scripts\activate
+py -m pip install -e .
 ```
 
 Edit `.py` files — changes are live on next `cleanmap` run thanks to `-e`.
+
+> **macOS / Linux:** use `python3 -m venv .venv && source .venv/bin/activate && pip install -e .`.
+
+## Troubleshooting
+
+**`'pip' is not recognized`** — use `py -m pip ...` instead. Same result, doesn't require `pip.exe` to be on PATH.
+
+**`'export' is not recognized`** — that's Unix syntax. On Windows use `setx` (persistent) or `$env:VAR = "..."` (session).
+
+**`[WinError 2] ... websockets.exe.deleteme`** — a previous install got stuck. Fix: use a venv (`py -m venv .venv && .venv\Scripts\activate`) and reinstall. Venvs sidestep Windows system-Python permission issues.
+
+**`cleanmap: The term 'cleanmap' is not recognized`** — pip install succeeded but the shim isn't on your PATH. Either activate the venv you installed into, or close/reopen PowerShell.
 
 ## How it works
 
