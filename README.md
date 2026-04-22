@@ -19,10 +19,10 @@ Requires Python 3.10+. If you don't have Python, install it from https://python.
 Verify it worked:
 
 ```powershell
-cleanmap --help
+py -m cleanmap --help
 ```
 
-You should see the help text. If you get `'cleanmap' is not recognized`, close and reopen PowerShell and try again.
+You should see the help text. `py -m cleanmap` always works regardless of PATH. (The bare `cleanmap` command works too if your Python Scripts directory is on PATH, but `py -m cleanmap` is the safer default on Windows.)
 
 > **macOS / Linux:** use `pip install git+https://github.com/DavidChen-006/cleanmap.git` (or `python3 -m pip install ...`).
 
@@ -60,10 +60,10 @@ Gone when you close the window.
 
 ## Usage
 
-Fastest way: type `cleanmap ` (with a trailing space), then drag an image from File Explorer into the PowerShell window, hit Enter.
+Fastest way: type `py -m cleanmap ` (with a trailing space), then drag an image from File Explorer into the PowerShell window, hit Enter.
 
 ```powershell
-cleanmap "C:\Users\You\Downloads\photo.png"
+py -m cleanmap "C:\Users\You\Downloads\photo.png"
 # writes C:\Users\You\Downloads\photo.cleaned.png next to the input
 ```
 
@@ -72,10 +72,12 @@ cleanmap "C:\Users\You\Downloads\photo.png"
 ### Flags
 
 ```powershell
-cleanmap "C:\path\to\photo.png" -o "C:\path\to\cleaned.png"    # custom output path
-cleanmap "C:\path\to\photo.png" -p "Remove only cars and people"  # override the cleaning prompt
-cleanmap --help                                                  # full help
+py -m cleanmap "C:\path\to\photo.png" -o "C:\path\to\cleaned.png"    # custom output path
+py -m cleanmap "C:\path\to\photo.png" -p "Remove only cars and people"  # override the cleaning prompt
+py -m cleanmap --help                                                   # full help
 ```
+
+> **Note:** `py -m cleanmap` is the Windows-safe invocation (always works). If your PATH is set up right, the bare `cleanmap` command works identically — same tool, either way.
 
 ## Dev install (if you want to modify the code)
 
