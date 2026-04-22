@@ -1,23 +1,24 @@
 # cleanmap
 
-CLI tool for cleaning images — strips clutter (cars, people, trees) and returns the main subject. Powered by Gemini 2.5 Flash Image.
+CLI tool for cleaning images — strips clutter (cars, people, trees, signs) and returns the main subject. Powered by Gemini 2.5 Flash Image.
 
 ## Install
 
+Direct from GitHub (recommended for teammates):
+
 ```
-pip install -e .
+pip install git+https://github.com/DavidChen-006/cleanmap.git
 ```
+
+That's it. pip fetches the repo, installs dependencies, and puts `cleanmap` on your PATH.
+
+Requires Python 3.10+.
 
 ## Setup
 
-Get a Gemini API key: https://aistudio.google.com/apikey
+Get a free Gemini API key: https://aistudio.google.com/apikey
 
-```
-cp .env.example .env
-# edit .env and set GEMINI_API_KEY
-```
-
-Or export it directly:
+Export it (or put it in a `.env` file in your working directory):
 
 ```
 export GEMINI_API_KEY=your-key-here
@@ -26,24 +27,33 @@ export GEMINI_API_KEY=your-key-here
 ## Usage
 
 ```
-cleanmap input.png
-# writes input.cleaned.png
+cleanmap photo.png
+# writes photo.cleaned.png next to the input
 ```
 
-Custom output path:
+Drag-and-drop works: type `cleanmap `, then drag an image from Finder into the terminal, hit Enter.
+
+### Flags
 
 ```
-cleanmap input.png -o cleaned.png
+cleanmap photo.png -o cleaned.png                  # custom output path
+cleanmap photo.png -p "Remove only cars and people" # override the cleaning prompt
+cleanmap --help                                     # full help
 ```
 
-Custom prompt:
+## Dev install (if you want to modify the code)
 
 ```
-cleanmap input.png -p "Remove all people. Keep the storefront."
+git clone https://github.com/DavidChen-006/cleanmap.git
+cd cleanmap
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e .
 ```
+
+Edit `.py` files — changes are live on next `cleanmap` run thanks to `-e`.
 
 ## How it works
 
 ```
-CLI → load image → Gemini 2.5 Flash Image (image + prompt) → save result
+CLI → load image bytes → Gemini 2.5 Flash Image (image + prompt) → save result
 ```
