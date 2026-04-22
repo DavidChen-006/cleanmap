@@ -9,9 +9,13 @@ MODEL = "gemini-2.5-flash-image"
 
 DEFAULT_PROMPT = (
     
-    "Remove clutter like cars, people, trees, signs, and power lines. "
-    "Do not shift, rotate, rescale, or reframe the building; its position and size in the frame must be exactly preserved. "
-    "Preserve lighting and perspective. Return a clean edited image."
+    "Remove all obstructions blocking the view of the building: cars, people, "
+    "trees, signs, utility poles, and power lines. Seamlessly fill the vacated "
+    "areas by continuing the building's own patterns and the surrounding "
+    "environment. Keep everything else in the image exactly the same — the "
+    "building's position, size, framing, lighting, shadows, time of day, sky, "
+    "and perspective must be identical to the original. Return a clean edited "
+    "photo of the unobstructed building."
 )
 
 
