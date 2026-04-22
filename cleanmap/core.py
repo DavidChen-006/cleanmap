@@ -15,9 +15,7 @@ DEFAULT_PROMPT = (
     "environment. Keep everything else in the image exactly the same — the "
     "building's position, size, framing, lighting, shadows, time of day, sky, "
     "and perspective must be identical to the original. Return a clean edited "
-    "photo of the unobstructed building. "
-    "Finally, upscale the resulting image to a higher resolution with enhanced "
-    "sharpness and fine detail, preserving the exact framing and composition."
+    "photo of the unobstructed building."
 )
 
 
