@@ -24,6 +24,10 @@ Export it (or put it in a `.env` file in your working directory):
 export GEMINI_API_KEY=your-key-here
 ```
 
+> **Note:** `export GEMINI_API_KEY=...` only lasts for that terminal window. Close the terminal and it's gone — open a new one and you'll have to export again.
+>
+> To make it permanent, add the line to `~/.zshrc` (or `~/.bashrc`), or use a `.env` file in your project directory (`cleanmap` auto-loads it).
+
 ## Usage
 
 ```
