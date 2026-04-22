@@ -14,6 +14,14 @@ That's it. pip fetches the repo, installs dependencies, and puts `cleanmap` on y
 
 Requires Python 3.10+.
 
+> **If `pip` isn't recognized** (common on Windows), use the module form instead — it works as long as `python` is on PATH:
+>
+> ```
+> python -m pip install git+https://github.com/DavidChen-006/cleanmap.git
+> ```
+>
+> On Windows you may need `py -m pip ...` instead of `python -m pip ...`.
+
 ## Setup
 
 Get a free Gemini API key: https://aistudio.google.com/apikey
