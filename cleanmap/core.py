@@ -19,7 +19,13 @@ DEFAULT_PROMPT = (
 def clean_image(input_path, output_path, prompt=DEFAULT_PROMPT):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not set.")
+        raise RuntimeError(
+            "GEMINI_API_KEY not set in this terminal.\n"
+            "  - If you just ran `setx GEMINI_API_KEY ...`, close and reopen PowerShell, then retry.\n"
+            "  - For a quick one-off session, run: $env:GEMINI_API_KEY = \"your-key\"  (PowerShell)\n"
+            "                                  or: export GEMINI_API_KEY=your-key      (macOS/Linux)\n"
+            "  - Get a free key: https://aistudio.google.com/apikey"
+        )
 
     image_bytes = Path(input_path).read_bytes()
     mime_type = mimetypes.guess_type(input_path)[0] or "image/png"
