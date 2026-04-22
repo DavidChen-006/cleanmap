@@ -10,6 +10,8 @@ MODEL = "gemini-2.5-flash-image"
 DEFAULT_PROMPT = (
     "Extract the main building or primary subject. "
     "Remove clutter like cars, people, trees, signs, and power lines. "
+    "Do not change the output image's dimensions or aspect ratio — keep them identical to the input. "
+    "Do not shift, rotate, rescale, or reframe the building; its position and size in the frame must be exactly preserved. "
     "Preserve lighting and perspective. Return a clean edited image."
 )
 
