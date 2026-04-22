@@ -16,6 +16,14 @@ That's it. pip fetches the repo, installs dependencies, and puts `cleanmap` on y
 
 Requires Python 3.10+. If you don't have Python, install it from https://python.org — **tick "Add Python to PATH"** on the first installer screen.
 
+Verify it worked:
+
+```powershell
+cleanmap --help
+```
+
+You should see the help text. If you get `'cleanmap' is not recognized`, close and reopen PowerShell and try again.
+
 > **macOS / Linux:** use `pip install git+https://github.com/DavidChen-006/cleanmap.git` (or `python3 -m pip install ...`).
 
 ## Setup
@@ -28,7 +36,9 @@ Set it persistently (survives reboots, available in all future terminals):
 setx GEMINI_API_KEY "your-key-here"
 ```
 
-**Then close and reopen PowerShell** — `setx` only takes effect in *new* terminals, not the one you ran it in.
+**Two Windows gotchas:**
+- Use a **space** between the name and value, **not `=`**. `setx GEMINI_API_KEY=value` fails with "Invalid syntax."
+- `setx` only takes effect in *new* terminals — **close and reopen PowerShell** before using `cleanmap`.
 
 To verify it's set, open a new PowerShell and run:
 
@@ -50,19 +60,21 @@ Gone when you close the window.
 
 ## Usage
 
+Fastest way: type `cleanmap ` (with a trailing space), then drag an image from File Explorer into the PowerShell window, hit Enter.
+
 ```powershell
-cleanmap photo.png
-# writes photo.cleaned.png next to the input
+cleanmap "C:\Users\You\Downloads\photo.png"
+# writes C:\Users\You\Downloads\photo.cleaned.png next to the input
 ```
 
-Drag-and-drop works: type `cleanmap `, then drag an image from File Explorer into the terminal, hit Enter.
+**Wrap paths in double quotes** if they contain spaces (common in `C:\Users\...\Downloads\` filenames with spaces or `Screenshot 2026-04-22.png` style names).
 
 ### Flags
 
 ```powershell
-cleanmap photo.png -o cleaned.png                     # custom output path
-cleanmap photo.png -p "Remove only cars and people"   # override the cleaning prompt
-cleanmap --help                                       # full help
+cleanmap "C:\path\to\photo.png" -o "C:\path\to\cleaned.png"    # custom output path
+cleanmap "C:\path\to\photo.png" -p "Remove only cars and people"  # override the cleaning prompt
+cleanmap --help                                                  # full help
 ```
 
 ## Dev install (if you want to modify the code)
@@ -85,9 +97,15 @@ Edit `.py` files — changes are live on next `cleanmap` run thanks to `-e`.
 
 **`'export' is not recognized`** — that's Unix syntax. On Windows use `setx` (persistent) or `$env:VAR = "..."` (session).
 
+**`setx` says `ERROR: Invalid syntax`** — you used `=` instead of a space. Correct form: `setx GEMINI_API_KEY "your-key"` (space, value in quotes, no `=`).
+
 **`[WinError 2] ... websockets.exe.deleteme`** — a previous install got stuck. Fix: use a venv (`py -m venv .venv && .venv\Scripts\activate`) and reinstall. Venvs sidestep Windows system-Python permission issues.
 
-**`cleanmap: The term 'cleanmap' is not recognized`** — pip install succeeded but the shim isn't on your PATH. Either activate the venv you installed into, or close/reopen PowerShell.
+**`'cleanmap' is not recognized`** — pip install succeeded but the shim isn't on your PATH, or you haven't reopened PowerShell yet. Close and reopen the terminal. If you installed into a venv, activate it first (`.venv\Scripts\activate`).
+
+**`GEMINI_API_KEY not set`** — you set it with `setx` but haven't opened a new terminal yet. `setx` writes to the permanent store, it doesn't touch your current session. Close and reopen PowerShell.
+
+**Image returned but looks wrong / blurry / reframed** — Gemini occasionally ignores prompt constraints. Try a more specific `-p "..."` flag naming what to keep sharp, or run it again (the model is non-deterministic).
 
 ## How it works
 
