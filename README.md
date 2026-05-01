@@ -26,6 +26,18 @@ You should see the help text. `py -m cleanmap` always works regardless of PATH. 
 
 > **macOS / Linux:** use `pip install git+https://github.com/DavidChen-006/cleanmap.git` (or `python3 -m pip install ...`).
 
+## Update
+
+To pull the latest version from GitHub:
+
+```powershell
+py -m pip install --upgrade --force-reinstall git+https://github.com/DavidChen-006/cleanmap.git
+```
+
+`--force-reinstall` is needed because pip may otherwise skip the install when the version number hasn't changed.
+
+> **macOS / Linux:** `pip install --upgrade --force-reinstall git+https://github.com/DavidChen-006/cleanmap.git`
+
 ## Setup
 
 Get a free Gemini API key: https://aistudio.google.com/apikey
