@@ -8,14 +8,22 @@ from google.genai import types
 MODEL = "gemini-2.5-flash-image"
 
 DEFAULT_PROMPT = (
-    
-    "Remove all obstructions blocking the view of the building: cars, people, "
-    "trees, signs, utility poles, and power lines. Seamlessly fill the vacated "
-    "areas by continuing the building's own patterns and the surrounding "
-    "environment. Keep everything else in the image exactly the same — the "
-    "building's position, size, framing, lighting, shadows, time of day, sky, "
-    "and perspective must be identical to the original. Return a clean edited "
-    "photo of the unobstructed building."
+    "Goal: produce a photo of the building as if nothing were between the "
+    "camera and the building.\n\n"
+    "For every object that sits between the camera and the building — cars, "
+    "people, trees, signs, utility poles, power lines, fences, scaffolding, "
+    "banners, foliage, or anything else, named or not — remove the entire "
+    "object from the image (not just the part overlapping the building).\n\n"
+    "Where the removed object was covering the building, reconstruct the "
+    "building that was hidden: continue walls, windows, doors, trim, columns, "
+    "balconies, rooflines, and any other architectural features so the facade "
+    "looks complete and structurally consistent. Where the removed object was "
+    "covering only the ground, street, sidewalk, or sky, fill with the "
+    "matching surroundings.\n\n"
+    "Do not change the building's position, size, framing, lighting, shadows, "
+    "time of day, sky, perspective, or the background scene. Only the "
+    "obstructions in front of the building should disappear and be replaced "
+    "by what was geometrically behind them."
 )
 
 
