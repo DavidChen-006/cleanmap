@@ -23,10 +23,13 @@ def clean_image(input_path, output_path, prompt=DEFAULT_PROMPT):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError(
-            "GEMINI_API_KEY not set in this terminal.\n"
-            "  - If you just ran `setx GEMINI_API_KEY ...`, close and reopen PowerShell, then retry.\n"
-            "  - For a quick one-off session, run: $env:GEMINI_API_KEY = \"your-key\"  (PowerShell)\n"
-            "                                  or: export GEMINI_API_KEY=your-key      (macOS/Linux)\n"
+            "GEMINI_API_KEY not set.\n"
+            "  - Easiest: pass it on the command line: cleanmap <image> --api-key YOUR_KEY\n"
+            "  - Or create a .env file in your current directory with: GEMINI_API_KEY=your-key\n"
+            "  - Or set it for the session:\n"
+            "      PowerShell: $env:GEMINI_API_KEY = \"your-key\"\n"
+            "      macOS/Linux: export GEMINI_API_KEY=your-key\n"
+            "  - If you used `setx GEMINI_API_KEY ...`, close and reopen PowerShell, then retry.\n"
             "  - Get a free key: https://aistudio.google.com/apikey"
         )
 
